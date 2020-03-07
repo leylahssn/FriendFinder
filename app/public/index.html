@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Friends Finder</title>
+    <script src="https://code.jquery.com/jquery.js"></script>
+    <style>
+        body{
+            margin: 0px;
+            padding: 0px;
+        }
+        .container{
+            display: grid;
+            grid-template-columns: 1fr 2fr 1fr;
+        }
+        .container > nav {
+            background: #bebebe;
+            grid-column: 1/4;
+            text-align: center;
+            padding: 20px;
+            font-size: 30px;
+            font-family: Arial, Helvetica, sans-serif;
+            font-weight: bold;
+            color: white;
+            border-bottom: 2px solid black;
+        }
+        form{
+            padding: 5px;
+            display: grid;
+            grid-column: 2/3;
+            grid-template-columns: 1fr;
+
+        }
+        .question{
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+        }
+        .question > p {
+            grid-column: 1/2;
+        }
+        .question > select {
+            grid-column: 2/3;
+        }
+        .log{text-align: center;}
+    
+    </style>
+</head>
+<body>
+    <div class="container">
+        <nav>Friends Finder</nav>
+            <form id="FullForm">
+                <div class="log">
+                    <label>Name</label>
+                    <input id="name" type="text" name="name">
+                </div>
+                <div class="question">
+                    <p>Your mind is always buzzing with unexplored ideas and plans.</p>
+                    <select id="Q1" form="FullForm" name="Q1">
+                        <option value="" disabled selected>Select your option</option>
+                        <option value="1">1 (Strongly Disagree)</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5 (Strongly Agree)</option>
+                    </select>
+                </div>
+                <div class="question">
+                    <p>Generally speaking, you rely more on your experience than your imagination.</p>
+                    <select id="Q2">
+                        <option value="" disabled selected>Select your option</option>
+                        <option value="1">1 (Strongly Disagree)</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5 (Strongly Agree)</option>
+                    </select>
+                </div>
+                <div class="question">
+                    <p>You find it easy to stay relaxed and focused even when there is some pressure.</p>
+                    <select id="Q3">
+                        <option value="" disabled selected>Select your option</option>
+                        <option value="1">1 (Strongly Disagree)</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5 (Strongly Agree)</option>
+                    </select>
+                </div>
+                <div class="question">
+                    <p>You rarely do something just out of sheer curiosity.</p>
+                    <select id="Q4">
+                        <option value="" disabled selected>Select your option</option>
+                        <option value="1">1 (Strongly Disagree)</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5 (Strongly Agree)</option>
+                    </select>
+                </div>
+                <div class="question">
+                    <p>People can rarely upset you.</p>
+                    <select id="Q5">
+                        <option value="" disabled selected>Select your option</option>
+                        <option value="1">1 (Strongly Disagree)</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5 (Strongly Agree)</option>
+                    </select>
+                </div>
+                <input id="submit" type="submit">
+            </form>
+        
+    </div>
+    <script>
+        
+        document.getElementById("submit").addEventListener('click', function(){
+            event.preventDefault();
+            let friend = {
+                name: document.getElementById("name").value.trim(),
+                score: [
+                    document.getElementById("Q1").value,
+                    document.getElementById("Q2").value,
+                    document.getElementById("Q3").value,
+                    document.getElementById("Q4").value,
+                    document.getElementById("Q5").value
+                ]
+            }
+            //console.log(friend)
+            //for(let i = 0; i < friend.score.length; i++){
+            
+            let total = Number(friend.score[0]) + Number(friend.score[1]) + Number(friend.score[2]) + Number(friend.score[3]) + Number(friend.score[4])
+            console.log(total)
+            //}
+            let results = []
+            let currentURL = window.location.origin;
+			$.ajax({url: currentURL + "/api/friends", method: "GET"})
+				.done(function(Data){
+               
+                    if  (total <= 5){
+                        build(Data[1])
+                    } else if (total <= 10){
+                        build(Data[2])
+                    } else if (total <= 15){
+                        build(Data[3])
+                    } else if (total <= 20){
+                        build(Data[4])
+                    }
+                //let totalOG = Number(friend.score[0]) + Number(friend.score[1]) + Number(friend.score[2]) + Number(friend.score[3]) + Number(friend.score[4])
+
+            });
+            function build(data){
+                alert(`your friend id ${data.name}`)
+            }
+           
+            
+        })
+
+    </script>
+
+</body>
+</html>
