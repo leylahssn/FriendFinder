@@ -1,18 +1,18 @@
 const friendsData = [
     {
-        name: "Brittany",
+        name: "Mariah Carey",
         score: 13
     },
     {
-        name: "Angela",
+        name: "Lebron James",
         score: 15
     },
     {
-        name: "Mike",
+        name: "Beyonce",
         score: 11
     },
     {
-        name: "Nile",
+        name: "Jay-z",
         score: 20
     }
 ];
